@@ -1,6 +1,6 @@
 # simple_bank
 
-# Tech Stack
+Tech Stack
 
 Golang
 Postgres
