@@ -11,7 +11,7 @@ import (
 
 const (
 	dbDriver = "postgres"
-	dbSource = "postgresql://anoop:go@localhost:5433/simple_bank?sslmode=disable"
+	dbSource = "postgresql://anoop:root@localhost:5433/simple-bank?sslmode=disable"
 )
 
 var testQueries *Queries
