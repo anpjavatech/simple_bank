@@ -5,28 +5,27 @@ name: CICD
 on:
   push:
     branches: [main, feature]
-  pull_request: 
+  pull_request:
     branches: [main, feature]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-    # The "build" workflow
+  # The "build" workflow
   build:
     # The type of runner that the job will run on
+    name: Build
     runs-on: ubuntu-latest
-# Steps represent a sequence of tasks that will be executed as part of the job
+    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
-    
-    # Setup Go
-    - name: Setup Go
-      uses: actions/setup-go@v4
-      with:
-        go-version: '1.20' # The Go version to download (if necessary) and use.
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout Code
+        uses: actions/checkout@v2
 
-    - name: Build
-      run: go build -v ./...
+      # Setup Go
+      - name: Setup Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: "1.20" # The Go version to download (if necessary) and use.
 
-    - name: Test
-      run: go test -v ./...
+      - name: Test
+        run: make test
