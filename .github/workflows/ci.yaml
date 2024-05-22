@@ -47,5 +47,14 @@ jobs:
         with:
           go-version: "1.22.1" # The Go version to download (if necessary) and use.
 
+      - name: Install Golang Migrate
+        run: |
+          curl -L https://github.com/golang-migrate/migrate/releases/download/v4.17.1/migrate.linux-arm64.tar.gz | tar xvz
+          sudo mv migrate.linux-arm64 /usr/bin/migrate
+          which migrate
+
+      - name: Run Migrations
+        run: make migrateup
+
       - name: Test
         run: make test
