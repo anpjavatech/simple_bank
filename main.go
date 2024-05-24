@@ -6,17 +6,16 @@ import (
 
 	"github.com/anpjavatech/simple_bank/api"
 	db "github.com/anpjavatech/simple_bank/db/sqlc"
+	"github.com/anpjavatech/simple_bank/util"
 	_ "github.com/lib/pq"
 )
 
-const (
-	dbDriver = "postgres"
-	dbSource = "postgresql://anoop:root@localhost:5433/simple-bank?sslmode=disable"
-	address  = "localhost:8080"
-)
-
 func main() {
-	conn, err := sql.Open(dbDriver, dbSource)
+	config, err := util.LoadConfig(".")
+	if err != nil {
+		log.Fatal("cannot load config file ", err)
+	}
+	conn, err := sql.Open(config.DBDriver, config.DBSource)
 
 	if err != nil {
 		log.Fatal("Cannot connect to db:", err)
@@ -25,7 +24,7 @@ func main() {
 	store := db.NewStore(conn)
 	server := api.NewServer(store)
 
-	err = server.Start(address)
+	err = server.Start(config.ServerAddress)
 	if err != nil {
 		log.Fatal("cannot start server:", err.Error())
 	}
